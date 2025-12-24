@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Tripwise</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tripwise-auth-final.css">
+    <link rel="stylesheet" href="tripwise-custom-modal.css">
+
+    <style>
+        body {
+            background: var(--light-gray);
+        }
+
+        .profile-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-medium);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .profile-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Two Column Layout */
+        .profile-content {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 2rem;
+        }
+
+        /* LEFT COLUMN - Recent Trips */
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* RIGHT COLUMN - Account Info & Preferences */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .section-title i {
+            color: var(--secondary-blue);
+        }
+
+        .edit-btn {
+            background: var(--secondary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .preference-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .preference-tag {
+            padding: 0.5rem 1rem;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Recent Trips Styles */
+        .recent-trips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .trip-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .trip-card:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .trip-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.7rem;
+        }
+
+        .trip-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .trip-date {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .trip-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .trip-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .no-trips {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+
+        .no-trips i {
+            font-size: 3rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Edit Mode Styles */
+        .edit-mode-form {
+            display: none;
+        }
+
+        .edit-mode-form.active {
+            display: block;
+        }
+
+        .form-group-profile {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group-profile label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group-profile input,
+        .form-group-profile select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group-profile input:focus,
+        .form-group-profile select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: var(--light-blue);
+            border-color: var(--secondary-blue);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 0.7rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked ~ label {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .save-btn:hover {
+            background: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+
+        .cancel-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .success-message.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .save-btn, .cancel-btn {
+                width: 100%;
+            }
+        }
+    .trip-actions{display:flex;gap:0.5rem;margin-top:0.8rem}.trip-action-btn{flex:1;padding:0.5rem 0.8rem;border:none;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;gap:0.4rem}.trip-action-btn.btn-open{background:var(--secondary-blue);color:var(--white)}.trip-action-btn.btn-open:hover{background:var(--primary-blue);transform:translateY(-1px)}.trip-action-btn.btn-rename{background:var(--gold);color:var(--white)}.trip-action-btn.btn-rename:hover{background:var(--gold-accent);transform:translateY(-1px)}.trip-action-btn.btn-delete-trip{background:rgba(239,68,68,0.1);color:#ef4444}.trip-action-btn.btn-delete-trip:hover{background:#ef4444;color:var(--white);transform:translateY(-1px)}</style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-plane-departure"></i>
+                        <span>Tripwise</span>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#destinations" class="nav-link">
+                            <i class="fas fa-plane"></i>
+                            Ready Plans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#reviews" class="nav-link">
+                            <i class="fas fa-star"></i>
+                            Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="japan-custom-plan.html?country=japan&countryLabel=Japan&mode=planner" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            Trip Planner
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="profile.html" class="nav-link active">
+                            <i class="fas fa-user"></i>
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="auth-section">
+                    <button class="login-btn guest-only" id="loginBtn">
+                        Log in
+                    </button>
+                    <button class="signup-btn guest-only" id="signupBtn">
+                        Sign up
+                    </button>
+                    <button class="login-btn auth-only" id="logoutBtn" style="display: none;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+                
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">
+                <!-- Avatar will be populated by JS -->
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">Loading...</h1>
+                <p class="profile-email" id="profileEmail"></p>
+                <div class="profile-badges" id="profileBadges">
+                    <!-- Badges will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="profile-content">
+            <!-- LEFT COLUMN: Recent Trips -->
+            <div class="left-column">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-history"></i>
+                            Recent Trips
+                        </h2>
+                    </div>
+                    
+                    <div class="recent-trips-list" id="recentTripsList">
+                        <!-- Trips will be populated by JS -->
+                        <div class="no-trips">
+                            <i class="fas fa-suitcase-rolling"></i>
+                            <p>No trips yet</p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Start planning your first adventure!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Account Info & Preferences -->
+            <div class="right-column">
+                <!-- Account Settings -->
+                <div class="section-card">
+                    <div class="success-message" id="accountSuccessMessage">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Account information updated successfully!</span>
+                    </div>
+                    
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-circle"></i>
+                            Account Information
+                        </h2>
+                        <button class="edit-btn" id="editAccountBtn" onclick="toggleEditMode('account')">
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </button>
+                    </div>
+                    
+                    <!-- Display Mode -->
+                    <div id="accountDisplay">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Full Name</span>
+                                <span class="info-value" id="displayName">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email</span>
+                                <span class="info-value" id="displayEmail">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Username</span>
+                                <span class="info-value" id="displayUsername">Not set</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Mode -->
+                    <div id="accountEdit" class="edit-mode-form">
+                        <form id="accountForm">
+                            <div class="form-group-profile">
+                                <label for="editName">Full Name</label>
+                                <input type="text" id="editName" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group-profile">
+                                <label for="editEmail">Email</label>
+                                <input type="email" id="editEmail" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group-profile">
+                                <label for="editUsername">Username</label>
+                                <input type="text" id="editUsername" placeholder="Enter your username" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="cancelEdit('account')">Cancel</button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="section-card">
+                    <div class="success-message" id="passwordSuccessMessage">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Password changed successfully!</span>
+                    </div>
+                    
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-lock"></i>
+                            Change Password
+                        </h2>
+                        <button class="edit-btn" id="editPasswordBtn" onclick="toggleEditMode('password')">
+                            <i class="fas fa-key"></i>
+                            Change Password
+                        </button>
+                    </div>
+                    
+                    <!-- Display Mode -->
+                    <div id="passwordDisplay">
+                        <p style="color: var(--gray);">Password: ••••••••</p>
+                    </div>
+
+                    <!-- Edit Mode -->
+                    <div id="passwordEdit" class="edit-mode-form">
+                        <form id="passwordForm">
+                            <div class="form-group-profile">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" required minlength="6">
+                            </div>
+                            <div class="form-group-profile">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" placeholder="Enter new password" required minlength="6">
+                            </div>
+                            <div class="form-group-profile">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" placeholder="Confirm new password" required minlength="6">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="cancelEdit('password')">Cancel</button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i>
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- User Preferences -->
+                <div class="section-card">
+                    <div class="success-message" id="preferencesSuccessMessage">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Preferences updated successfully!</span>
+                    </div>
+                    
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-cog"></i>
+                            Travel Preferences
+                        </h2>
+                        <button class="edit-btn" id="editPreferencesBtn" onclick="toggleEditMode('preferences')">
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </button>
+                    </div>
+                    
+                    <!-- Display Mode -->
+                    <div id="preferencesDisplay">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Travel Budget</span>
+                                <span class="info-value" id="displayBudget">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Trip Styles</span>
+                                <div class="preference-tags" id="displayStyles">
+                                    <span class="preference-tag">Not set</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Mode -->
+                    <div id="preferencesEdit" class="edit-mode-form">
+                        <form id="preferencesForm">
+                            <div class="form-group-profile">
+                                <label>Travel Budget</label>
+                                <select id="editBudget">
+                                    <option value="">Select budget preference</option>
+                                    <option value="budget-friendly">Budget-Friendly</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="luxury">Luxury</option>
+                                </select>
+                            </div>
+                            <div class="form-group-profile">
+                                <label>Trip Styles (Select all that apply)</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-nature" value="nature">
+                                        <label for="style-nature">Nature</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-city" value="city">
+                                        <label for="style-city">City</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-adventure" value="adventure">
+                                        <label for="style-adventure">Adventure</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-beach" value="beach">
+                                        <label for="style-beach">Beach</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-culture" value="culture">
+                                        <label for="style-culture">Culture</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="style-food" value="food">
+                                        <label for="style-food">Food</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" onclick="cancelEdit('preferences')">Cancel</button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i>
+                                    Save Preferences
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal Container -->
+    <div id="loginModal"></div>
+
+    </script>
+    <script>
+        // Profile page script with Trip Management
+    // Use STORAGE_KEYS from tripwise-auth-final.js (we don't redeclare it here)
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Redirect if not logged in
+            if (!isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            loadProfileData();
+            loadRecentTrips();
+            setupFormHandlers();
+        });
+
+        function isLoggedIn() {
+            return localStorage.getItem(STORAGE_KEYS.IS_LOGGED_IN) === 'true';
+        }
+
+        function getCurrentUser() {
+            const userStr = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+            return userStr ? JSON.parse(userStr) : null;
+        }
+
+        function saveCurrentUser(user) {
+            localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+        }
+
+        function loadProfileData() {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            // Avatar
+            const avatarEl = document.getElementById('profileAvatar');
+            if (user.picture) {
+                avatarEl.innerHTML = `<img src="${user.picture}" alt="${user.name}">`;
+            } else {
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                avatarEl.textContent = initials;
+            }
+
+            // Name and Email
+            document.getElementById('profileName').textContent = user.name;
+            document.getElementById('profileEmail').textContent = user.email;
+
+            // Badges
+            const badgesEl = document.getElementById('profileBadges');
+            badgesEl.innerHTML = `
+                <span class="badge">
+                    <i class="fas fa-calendar-check"></i>
+                    Member
+                </span>
+            `;
+
+            // Account Information
+            document.getElementById('displayName').textContent = user.name;
+            document.getElementById('displayEmail').textContent = user.email;
+            document.getElementById('displayUsername').textContent = user.username || user.name.replace(/\s+/g, '').toLowerCase();
+
+            // Preferences
+            const prefs = localStorage.getItem(STORAGE_KEYS.USER_PREFERENCES);
+            if (prefs) {
+                const preferences = JSON.parse(prefs);
+                
+                // Budget
+                if (preferences.budget) {
+                    const budgetLabels = {
+                        'budget-friendly': 'Budget-Friendly',
+                        'medium': 'Medium',
+                        'luxury': 'Luxury'
+                    };
+                    document.getElementById('displayBudget').textContent = budgetLabels[preferences.budget] || preferences.budget;
+                }
+
+                // Trip Styles
+                const stylesEl = document.getElementById('displayStyles');
+                if (preferences.tripStyles && preferences.tripStyles.length > 0) {
+                    stylesEl.innerHTML = preferences.tripStyles.map(style => 
+                        `<span class="preference-tag">${capitalizeFirst(style)}</span>`
+                    ).join('');
+                } else {
+                    stylesEl.innerHTML = '<span class="preference-tag">Not set</span>';
+                }
+            }
+        }
+
+        function loadRecentTrips() {
+            const tripsListEl = document.getElementById('recentTripsList');
+            
+            // Get saved trips for current user
+            const savedTrips = getAllSavedTrips();
+            
+            if (savedTrips.length === 0) {
+                tripsListEl.innerHTML = `
+                    <div class="no-trips">
+                        <i class="fas fa-suitcase-rolling"></i>
+                        <p>No trips yet</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Start planning your first adventure!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by date (most recent first)
+            const recentTrips = savedTrips.slice(-10).reverse();
+            
+            tripsListEl.innerHTML = recentTrips.map(trip => {
+                const tripDate = trip.lastUpdated ? new Date(trip.lastUpdated).toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                }) : 'Recently saved';
+                
+                // Get full itinerary from localStorage
+                const itineraryKey = `itinerary:${trip.id}`;
+                const itineraryData = localStorage.getItem(itineraryKey);
+                let dayCount = trip.days || 0;
+                let activityCount = 0;
+                
+                if (itineraryData) {
+                    try {
+                        const itinerary = JSON.parse(itineraryData);
+                        dayCount = itinerary.length;
+                        activityCount = itinerary.reduce((sum, day) => sum + (day.activities ? day.activities.length : 0), 0);
+                    } catch (e) {
+                        console.error('Error parsing itinerary:', e);
+                    }
+                }
+                
+                // Escape single quotes in trip title for onclick
+                const escapedTitle = (trip.title || 'Untitled Trip').replace(/'/g, "\\'");
+                
+                return `
+                    <div class="trip-card">
+                        <div class="trip-card-header">
+                            <div class="trip-title">${trip.title || 'Untitled Trip'}</div>
+                            <div class="trip-date">${tripDate}</div>
+                        </div>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar-day"></i> ${dayCount} ${dayCount === 1 ? 'day' : 'days'}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${activityCount} ${activityCount === 1 ? 'activity' : 'activities'}</span>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="trip-action-btn btn-open" onclick="openTrip('${trip.id}')" title="Open Trip">
+                                <i class="fas fa-folder-open"></i> Open
+                            </button>
+                            <button class="trip-action-btn btn-rename" onclick="event.stopPropagation(); renameTrip('${trip.id}', '${escapedTitle}');" title="Rename Trip">
+                                <i class="fas fa-edit"></i> Rename
+                            </button>
+                            <button class="trip-action-btn btn-delete-trip" onclick="event.stopPropagation(); deleteTrip('${trip.id}');" title="Delete Trip">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getAllSavedTrips() {
+            const user = getCurrentUser();
+            if (!user || !user.email) {
+                return [];
+            }
+            
+            // Read from the user-specific trips key
+            const tripsKey = 'tripwise:trips:' + user.email;
+            const tripsData = localStorage.getItem(tripsKey);
+            
+            if (!tripsData) {
+                return [];
+            }
+            
+            try {
+                const trips = JSON.parse(tripsData);
+                return trips.sort((a, b) => {
+                    const dateA = new Date(a.lastUpdated || 0);
+                    const dateB = new Date(b.lastUpdated || 0);
+                    return dateA - dateB;
+                });
+            } catch (e) {
+                console.error('Error parsing trips:', e);
+                return [];
+            }
+        }
+
+        function openTrip(tripId) {
+            // Navigate to the unified planner (Japan custom plan) with the trip loaded
+            window.location.href = `japan-custom-plan.html?tripId=${tripId}`;
+        }
+
+        function renameTrip(tripId, currentName) {
+            const newName = prompt('Enter new trip name:', currentName);
+            
+            if (!newName || newName.trim() === '') {
+                return; // User cancelled
+            }
+            
+            if (newName === currentName) {
+                return; // No change
+            }
+            
+            const user = getCurrentUser();
+            if (!user || !user.email) return;
+            
+            const tripsKey = 'tripwise:trips:' + user.email;
+            const tripsData = localStorage.getItem(tripsKey);
+            
+            if (!tripsData) return;
+            
+            try {
+                const trips = JSON.parse(tripsData);
+                const trip = trips.find(t => t.id === tripId);
+                
+                if (trip) {
+                    trip.title = newName.trim();
+                    trip.lastUpdated = new Date().toISOString();
+                    localStorage.setItem(tripsKey, JSON.stringify(trips));
+                    loadRecentTrips();
+                }
+            } catch (e) {
+                console.error('Error renaming trip:', e);
+                alert('Error renaming trip');
+            }
+        }
+
+        function deleteTrip(tripId) {
+            if (!confirm('Are you sure you want to delete this trip? This cannot be undone.')) {
+                return;
+            }
+            
+            const user = getCurrentUser();
+            if (!user || !user.email) return;
+            
+            const tripsKey = 'tripwise:trips:' + user.email;
+            const tripsData = localStorage.getItem(tripsKey);
+            
+            if (tripsData) {
+                try {
+                    let trips = JSON.parse(tripsData);
+                    trips = trips.filter(t => t.id !== tripId);
+                    localStorage.setItem(tripsKey, JSON.stringify(trips));
+                } catch (e) {
+                    console.error('Error deleting from trips list:', e);
+                }
+            }
+            
+            // Remove itinerary data
+            const itineraryKey = 'itinerary:' + tripId;
+            localStorage.removeItem(itineraryKey);
+            
+            // Reload trips list
+            loadRecentTrips();
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function toggleEditMode(section) {
+            const displayEl = document.getElementById(`${section}Display`);
+            const editEl = document.getElementById(`${section}Edit`);
+            const editBtnEl = document.getElementById(`edit${capitalizeFirst(section)}Btn`);
+
+            if (editEl.classList.contains('active')) {
+                cancelEdit(section);
+            } else {
+                displayEl.style.display = 'none';
+                editEl.classList.add('active');
+                editBtnEl.style.display = 'none';
+                populateEditForm(section);
+            }
+        }
+
+        function cancelEdit(section) {
+            const displayEl = document.getElementById(`${section}Display`);
+            const editEl = document.getElementById(`${section}Edit`);
+            const editBtnEl = document.getElementById(`edit${capitalizeFirst(section)}Btn`);
+
+            displayEl.style.display = 'block';
+            editEl.classList.remove('active');
+            editBtnEl.style.display = 'flex';
+            document.getElementById(`${section}Form`).reset();
+        }
+
+        function populateEditForm(section) {
+            const user = getCurrentUser();
+            
+            if (section === 'account') {
+                document.getElementById('editName').value = user.name;
+                document.getElementById('editEmail').value = user.email;
+                document.getElementById('editUsername').value = user.username || user.name.replace(/\s+/g, '').toLowerCase();
+            } else if (section === 'preferences') {
+                const prefs = localStorage.getItem(STORAGE_KEYS.USER_PREFERENCES);
+                if (prefs) {
+                    const preferences = JSON.parse(prefs);
+                    
+                    if (preferences.budget) {
+                        document.getElementById('editBudget').value = preferences.budget;
+                    }
+
+                    if (preferences.tripStyles && preferences.tripStyles.length > 0) {
+                        preferences.tripStyles.forEach(style => {
+                            const checkbox = document.getElementById(`style-${style}`);
+                            if (checkbox) checkbox.checked = true;
+                        });
+                    }
+                }
+            }
+        }
+
+        function showSuccessMessage(section) {
+            const messageEl = document.getElementById(`${section}SuccessMessage`);
+            messageEl.classList.add('show');
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
+
+        function setupFormHandlers() {
+            // Account Form
+            document.getElementById('accountForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const user = getCurrentUser();
+                user.name = document.getElementById('editName').value;
+                user.email = document.getElementById('editEmail').value;
+                user.username = document.getElementById('editUsername').value;
+                
+                saveCurrentUser(user);
+                loadProfileData();
+                cancelEdit('account');
+                showSuccessMessage('account');
+            });
+
+            // Password Form
+            document.getElementById('passwordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match!');
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert('Password must be at least 6 characters!');
+                    return;
+                }
+
+                alert('Password updated successfully!');
+                
+                cancelEdit('password');
+                showSuccessMessage('password');
+            });
+
+            // Preferences Form
+            document.getElementById('preferencesForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const budget = document.getElementById('editBudget').value;
+                const tripStyles = [];
+                document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked').forEach(checkbox => {
+                    tripStyles.push(checkbox.value);
+                });
+
+                const preferences = {
+                    budget: budget,
+                    tripStyles: tripStyles
+                };
+
+                localStorage.setItem(STORAGE_KEYS.USER_PREFERENCES, JSON.stringify(preferences));
+                loadProfileData();
+                cancelEdit('preferences');
+                showSuccessMessage('preferences');
+            });
+        }
+        
+    </script>
+    </script>
+
+ <script src="tripwise-auth-final.js"></script>
+<script src="trip-open-handler.js"></script>  <!-- this must exist -->
+<script src="profile-loader-fix.js"></script>

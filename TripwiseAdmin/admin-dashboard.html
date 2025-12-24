@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Tripwise</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="logo">
+                        <i class="fas fa-plane-departure"></i>
+                        <span class="logo-text">Tripwise Admin</span>
+                    </div>
+                    <h1 class="page-title">Dashboard Overview</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="header-actions">
+                        <!-- Go to Website Button -->
+                        <a href="https://tripwiseproject.netlify.app/" target="_blank" class="website-btn">
+                            <i class="fas fa-globe"></i>
+                            <span>Go to Website</span>
+                        </a>
+                        
+                        <!-- Theme Toggle -->
+                        <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                        
+                        <!-- Notifications -->
+                        <div class="notification-dropdown">
+                            <button class="notification-btn" id="notificationBtn">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge">3</span>
+                            </button>
+                            <div class="notification-menu" id="notificationMenu">
+                                <div class="notification-header">
+                                    <h3>Notifications</h3>
+                                    <span class="notification-count">3 new</span>
+                                </div>
+                                <div class="notification-list">
+                                    <div class="notification-item">
+                                        <i class="fas fa-user-plus text-blue"></i>
+                                        <div class="notification-content">
+                                            <p>New user registered</p>
+                                            <span class="notification-time">5 minutes ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <i class="fas fa-route text-gold"></i>
+                                        <div class="notification-content">
+                                            <p>Trip to Japan completed</p>
+                                            <span class="notification-time">1 hour ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <i class="fas fa-star text-gold"></i>
+                                        <div class="notification-content">
+                                            <p>New 5-star review received</p>
+                                            <span class="notification-time">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Settings -->
+                        <button class="settings-btn" title="Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        
+                        <!-- Admin Profile -->
+                        <div class="admin-profile">
+                            <img src="" alt="Admin" class="admin-avatar">
+                            <div class="admin-info">
+                                <span class="admin-name">Mohammed Alnaffaee</span>
+                                <span class="admin-role">Administrator</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+                <!-- Statistics Cards -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalUsers">12,847</div>
+                                <div class="stat-label">Total Users</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12.5%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalTrips">8,596</div>
+                                <div class="stat-label">Total Trips Planned</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8.3%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon revenue-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalRevenue">$245,890</div>
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+15.2%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-user-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="activeUsers">1,234</div>
+                                <div class="stat-label">Active Users Today</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+5.7%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="avgDuration">7.2</div>
+                                <div class="stat-label">Avg Trip Duration (days)</div>
+                                <div class="stat-change negative">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-2.1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <section class="charts-section">
+                    <div class="charts-grid">
+                        <!-- User Signups Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>User Signups Over Time</h3>
+                                <div class="chart-actions">
+                                    <select class="time-filter" id="signupTimeFilter">
+                                        <option value="7days">Last 7 Days</option>
+                                        <option value="30days" selected>Last 30 Days</option>
+                                        <option value="90days">Last 90 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="signupChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Trips Created Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Trips Created Per Month</h3>
+                                <div class="chart-actions">
+                                    <select class="time-filter" id="tripsTimeFilter">
+                                        <option value="6months" selected>Last 6 Months</option>
+                                        <option value="12months">Last 12 Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="tripsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Top Destinations Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Top Travel Destinations</h3>
+                                <div class="chart-legend" id="destinationLegend"></div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="destinationsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Activity & Feedback Section -->
+                <section class="activity-feedback-section">
+                    <div class="activity-feedback-grid">
+                        <!-- Recent Activity Table -->
+                        <div class="activity-card">
+                            <div class="card-header">
+                                <h3>Recent Activity</h3>
+                                <button class="view-all-btn">View All</button>
+                            </div>
+                            <div class="table-container">
+                                <table class="activity-table">
+                                    <thead>
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>Trip Destination</th>
+                                            <th>Date Created</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="activityTableBody">
+                                        <!-- Populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Feedback Summary -->
+                        <div class="feedback-card">
+                            <div class="card-header">
+                                <h3>Recent Feedback</h3>
+                                <div class="rating-summary">
+                                    <div class="avg-rating">
+                                        <span class="rating-number">4.9</span>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="sentiment-indicator positive">
+                                        <i class="fas fa-smile"></i>
+                                        <span>Positive</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feedback-list" id="feedbackList">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- System Metrics Section -->
+                <section class="system-metrics-section">
+                    <h3>System Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value">99.9%</div>
+                                <div class="metric-label">Server Uptime</div>
+                                <div class="metric-status online">Online</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value">1.2M</div>
+                                <div class="metric-label">API Calls Today</div>
+                                <div class="metric-status normal">Normal</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value">0.02%</div>
+                                <div class="metric-label">Error Rate</div>
+                                <div class="metric-status good">Good</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-value">78%</div>
+                                <div class="metric-label">Database Usage</div>
+                                <div class="metric-status normal">Normal</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

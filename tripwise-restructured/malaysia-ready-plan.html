@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysia 7-Day Premium Experience: Kuala Lumpur → Langkawi - Tripwise</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tripwise-auth-final.css">
+
+    <style>
+        /* ===== Single Auth Button Styling (same as Japan page) ===== */
+
+        .auth-section .signup-btn,
+        .auth-section .logout-btn {
+            display: none !important;
+        }
+
+        .auth-section .single-auth-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .auth-section .single-auth-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        body:not(.authenticated) .guest-only {
+            display: inline-flex !important;
+        }
+
+        body:not(.authenticated) .auth-only {
+            display: none !important;
+        }
+
+        body.authenticated .guest-only {
+            display: none !important;
+        }
+
+        body.authenticated .auth-only {
+            display: inline-flex !important;
+        }
+
+        /* ===== Malaysia Ready Plan Styles (copy of Japan, different image/text) ===== */
+
+        .plan-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 120px 20px 60px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Malaysia hero image */
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop&auto=enhance&sat=1.2&vib=1.1') center/cover;
+            opacity: 0.35;
+        }
+
+        .plan-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .plan-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .plan-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .plan-summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .plan-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .itinerary-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .day-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-number {
+            background: var(--gold);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .day-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .day-title p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .day-content {
+            padding: 2rem;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .activity-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--gold);
+        }
+
+        .activity-card:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .activity-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .activity-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .activity-location:hover {
+            color: var(--gold);
+        }
+
+        .gallery-section {
+            background: var(--light-gray);
+            padding: 60px 20px;
+            margin: 4rem -20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-large);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--white);
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .price-breakdown {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .price-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .price-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .total-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-note {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .price-items {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+        }
+
+        .price-item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .price-item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .price-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .price-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .inclusions-section {
+            background: var(--light-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .inclusions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .inclusion-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .inclusion-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .inclusion-text {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .customize-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .customize-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .book-btn {
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .book-btn:hover {
+            background: var(--gold-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        @media (max-width: 768px) {
+            .plan-title {
+                font-size: 2rem;
+            }
+
+            .plan-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .plan-summary-cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .day-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .day-content {
+                padding: 1.5rem;
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same style as main site) -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-plane-departure"></i>
+                        <span>Tripwise</span>
+                    </div>
+                </div>
+
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#destinations" class="nav-link">
+                            <i class="fas fa-plane"></i>
+                            Destinations
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="japan-custom-plan.html?country=malaysia&countryLabel=Malaysia&mode=planner" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            Trip Planner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#reviews" class="nav-link">
+                            <i class="fas fa-star"></i>
+                            Reviews
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="auth-section">
+                    <!-- Guest: Login -->
+                    <button class="single-auth-btn guest-only" id="loginBtn">
+                        Login
+                    </button>
+                    <!-- Authenticated: Back -->
+                    <button class="single-auth-btn auth-only" id="backBtn" style="display: none;" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Plan Header -->
+    <section class="plan-header">
+        <div class="plan-header-content">
+            <h1 class="plan-title">🇲🇾 Malaysia 7-Day Premium Experience</h1>
+            <p class="plan-subtitle">Kuala Lumpur → Cameron Highlands → Langkawi | Culture, Nature, and Beaches</p>
+
+            <div class="plan-summary-cards">
+                <div class="summary-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Duration</h3>
+                    <p>7 Days / 6 Nights</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Total Price</h3>
+                    <p>From $1,875</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Group Size</h3>
+                    <p>2 Travelers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="plan-content">
+        <!-- Itinerary -->
+        <section class="itinerary-section">
+            <div class="section-header">
+                <h2>📅 Day-by-Day Itinerary</h2>
+                <p>Handcrafted Malaysian journey from skyscrapers to rainforest and islands</p>
+            </div>
+
+            <!-- Day 1 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <div class="day-title">
+                        <h3>Arrival in Kuala Lumpur</h3>
+                        <p>Welcome to Malaysia’s vibrant capital</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.pexels.com/photos/1166209/pexels-photo-1166209.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Kuala Lumpur Skyline"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-plane-arrival"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Airport Arrival & Hotel Check-in</h4>
+                                    <span class="activity-time">10:00 AM - 2:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Arrive at Kuala Lumpur International Airport, meet your representative, and transfer to your 5-star hotel in the city center.
+                            </p>
+                            <a href="https://maps.google.com/search/Kuala+Lumpur+City+Centre" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kuala Lumpur City Centre
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-landmark"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Petronas Twin Towers & KLCC Park</h4>
+                                    <span class="activity-time">4:00 PM - 7:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Visit the iconic Petronas Twin Towers and enjoy a relaxing walk in KLCC Park with sunset views over the skyline.
+                            </p>
+                            <a href="https://maps.google.com/search/Petronas+Twin+Towers" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Petronas Twin Towers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2</div>
+                    <div class="day-title">
+                        <h3>Kuala Lumpur City & Batu Caves</h3>
+                        <p>Culture, heritage and colorful temples</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1"
+                             alt="Batu Caves"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-city"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Historic Kuala Lumpur Tour</h4>
+                                    <span class="activity-time">9:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Explore Merdeka Square, the Sultan Abdul Samad Building and Central Market with your guide.
+                            </p>
+                            <a href="https://maps.google.com/search/Merdeka+Square+Kuala+Lumpur" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Merdeka Square & Surroundings
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Batu Caves Excursion</h4>
+                                    <span class="activity-time">2:00 PM - 5:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Visit the world-famous Batu Caves, climb the vibrant staircase and see Hindu temples built inside limestone caves.
+                            </p>
+                            <a href="https://maps.google.com/search/Batu+Caves+Malaysia" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Batu Caves
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">3</div>
+                    <div class="day-title">
+                        <h3>Cameron Highlands</h3>
+                        <p>Cool mountain climate and tea plantations</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1"
+                             alt="Cameron Highlands Tea"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Journey to the Highlands</h4>
+                                    <span class="activity-time">9:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Scenic drive from Kuala Lumpur to Cameron Highlands with photo stops along the way.
+                            </p>
+                            <a href="https://maps.google.com/search/Cameron+Highlands+Malaysia" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Cameron Highlands
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Tea Plantation & Strawberry Farm</h4>
+                                    <span class="activity-time">3:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Visit a traditional tea plantation, enjoy panoramic views and taste freshly brewed tea; continue to a strawberry farm.
+                            </p>
+                            <a href="https://maps.google.com/search/BOH+Tea+Plantation+Cameron+Highlands" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                BOH Tea Plantation Area
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <div class="day-title">
+                        <h3>Flight to Langkawi</h3>
+                        <p>From mountains to tropical beaches</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1526481280694-3c687fd543c0?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1"
+                             alt="Langkawi Beach"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-plane"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Transfer & Domestic Flight</h4>
+                                    <span class="activity-time">9:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Morning transfer back to the airport and short domestic flight to Langkawi island.
+                            </p>
+                            <a href="https://maps.google.com/search/Langkawi+Airport" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Langkawi International Airport
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-umbrella-beach"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Beachfront Check-in & Sunset</h4>
+                                    <span class="activity-time">3:00 PM - 7:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Check into your beachfront resort and relax by the pool or on the sand; enjoy a Langkawi sunset.
+                            </p>
+                            <a href="https://maps.google.com/search/Pantai+Cenang+Langkawi" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Pantai Cenang Area
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">5</div>
+                    <div class="day-title">
+                        <h3>Island Hopping & Mangroves</h3>
+                        <p>Boats, lagoons and wildlife</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1494475673543-6a6a27143fc8?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1"
+                             alt="Island Hopping"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-ship"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Langkawi Island Hopping Tour</h4>
+                                    <span class="activity-time">9:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Shared boat tour to nearby islands with swimming, photo stops and the famous Pregnant Maiden Lake.
+                            </p>
+                            <a href="https://maps.google.com/search/Langkawi+Island+Hopping" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Langkawi Archipelago
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Kilim Karst Geoforest Park Mangroves</h4>
+                                    <span class="activity-time">3:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Explore UNESCO-listed mangroves by boat, see limestone formations, eagles and floating fish farms.
+                            </p>
+                            <a href="https://maps.google.com/search/Kilim+Karst+Geoforest+Park" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kilim River Area
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">6</div>
+                    <div class="day-title">
+                        <h3>Sky Bridge & Free Time</h3>
+                        <p>Panoramic views and leisure day</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1"
+                             alt="Langkawi Sky Bridge"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-bridge"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Langkawi Cable Car & Sky Bridge</h4>
+                                    <span class="activity-time">9:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Ride one of the steepest cable cars in the world and walk the suspended Sky Bridge with stunning island views.
+                            </p>
+                            <a href="https://maps.google.com/search/Langkawi+Sky+Bridge" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Gunung Mat Cincang
+                            </a>
+                        </div>
+
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-cocktail"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Resort Leisure & Shopping</h4>
+                                    <span class="activity-time">3:00 PM - Evening</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                Free time to enjoy resort facilities, spa or duty-free shopping in Kuah Town.
+                            </p>
+                            <a href="https://maps.google.com/search/Kuah+Town+Langkawi" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kuah Town
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">7</div>
+                    <div class="day-title">
+                        <h3>Departure</h3>
+                        <p>Goodbye Malaysia, see you again</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hotel"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Check-out & Airport Transfer</h4>
+                                    <span class="activity-time">10:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">
+                                After breakfast, check out from your resort and transfer to the airport for your onward flight.
+                            </p>
+                            <a href="https://maps.google.com/search/Langkawi+Airport" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Langkawi International Airport
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price Breakdown (simple version) -->
+        <section class="price-breakdown">
+            <div class="price-header">
+                <h3>💰 Price Breakdown (Per Person)</h3>
+                <div class="total-price">From $1,875</div>
+                <p class="price-note">Based on double occupancy, excluding international flights</p>
+            </div>
+            <div class="price-items">
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <div>
+                            <h4>Accommodation (6 nights)</h4>
+                            <p>5-star hotel in Kuala Lumpur, boutique stay in Cameron, beachfront resort in Langkawi</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$1,050</div>
+                </div>
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <div>
+                            <h4>Transportation</h4>
+                            <p>Private transfers, domestic flight, tours and excursions</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$450</div>
+                </div>
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div>
+                            <h4>Activities & Selected Meals</h4>
+                            <p>Guided tours, entrance fees and featured dinners</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$375</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inclusions -->
+        <section class="inclusions-section">
+            <h3>✅ What’s Included</h3>
+            <div class="inclusions-grid">
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <span class="inclusion-text">Professional English-speaking guide in each destination</span>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-shuttle-van"></i>
+                    </div>
+                    <span class="inclusion-text">All private airport and hotel transfers</span>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <span class="inclusion-text">Entrance fees for mentioned tours and attractions</span>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <span class="inclusion-text">Portable Wi-Fi or SIM card (where available)</span>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <span class="inclusion-text">24/7 customer support while traveling</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <!-- For now just mirror Japan: later we can point this to malaysia-custom-plan.html -->
+            <button class="customize-btn" onclick="window.location.href='malaysia-custom-plan.html?mode=malaysia'">
+                <i class="fas fa-edit"></i>
+                Customize This Plan
+            </button>
+            <button class="book-btn" onclick="alert('Redirecting to booking...')">
+                <i class="fas fa-shopping-cart"></i>
+                Book Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer (reuse main footer) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tripwise</h3>
+                    <p>Your perfect platform for smart and easy trip planning</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#destinations">Destinations</a></li>
+                        <li><a href="japan-custom-plan.html?country=malaysia&countryLabel=Malaysia&mode=planner">Trip Planner</a></li>
+                        <li><a href="index.html#reviews">Reviews</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Partners</h4>
+                    <div class="partners-placeholder">
+                        <p>Partner Logos Placeholder</p>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> [email protected]</p>
+                        <p><i class="fas fa-phone"></i> +1 555 123 4567</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tripwise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="tripwise-auth-final.js"></script>
+</body>
+</html>

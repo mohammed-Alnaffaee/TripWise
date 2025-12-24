@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tripwise - Your Personalized Trip Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tripwise-auth-final.css">
+</head>
+<body>
+    
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo Section -->
+                <div class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-plane-departure"></i>
+                        <span>Tripwise</span>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#destinations" class="nav-link">
+                            <i class="fas fa-plane"></i>
+                            Ready Plans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reviews" class="nav-link">
+                            <i class="fas fa-star"></i>
+                            Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="japan-custom-plan.html?country=japan&countryLabel=Japan&mode=planner" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            Trip Planner
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="profile.html" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Auth Buttons -->
+             <div class="auth-section">
+    <button class="login-btn guest-only" id="loginBtn">
+        Log in
+    </button>
+    <button class="signup-btn guest-only" id="signupBtn">
+        Sign up
+    </button>
+
+    <!-- عند تسجيل الدخول: إظهار اسم المستخدم، والضغط يفتح صفحة Profile -->
+    <button class="login-btn auth-only" id="navUserBtn" style="display: none;">
+        <i class="fas fa-user-circle"></i>
+        <span id="navUserName">Profile</span>
+    </button>
+</div>
+
+
+                
+                <!-- Mobile Menu Toggle -->
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Trip Planner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">YOUR ULTIMATE TRIP PLANNER</h1>
+            <p class="hero-subtitle">Plan your trip with ease, explore the world with Tripwise</p>
+            
+            <!-- Main Planner Bar -->
+            <div class="trip-planner">
+                <div class="planner-form">
+                    <div class="form-group">
+                        <label for="country">Choose Country</label>
+                        <select id="country" class="form-control destination-input">
+                            <option value="">Select Destination</option>
+                            <option value="saudi-arabia">🇸🇦 Saudi Arabia</option>
+                            <option value="india">🇮🇳 India</option>
+                            <option value="japan">🇯🇵 Japan</option>
+                            <option value="malaysia">🇲🇾 Malaysia</option>
+                            <option value="france">🇫🇷 France</option>
+                            <option value="italy">🇮🇹 Italy</option>
+                            <option value="united-states">🇺🇸 United States</option>
+                            <option value="thailand">🇹🇭 Thailand</option>
+                            <option value="turkey">🇹🇷 Turkey</option>
+                            <option value="uae">🇦🇪 United Arab Emirates</option>
+                            <option value="indonesia">🇮🇩 Indonesia</option>
+                            <option value="spain">🇪🇸 Spain</option>
+                            <option value="greece">🇬🇷 Greece</option>
+                            <option value="morocco">🇲🇦 Morocco</option>
+                            <option value="egypt">🇪🇬 Egypt</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="start-date">Departure Date</label>
+                        <input type="date" id="start-date" class="form-control date-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="end-date">Return Date</label>
+                        <input type="date" id="end-date" class="form-control date-input">
+                    </div>
+                    
+                    <button class="plan-trip-btn" id="planTripBtn">
+                        <i class="fas fa-magic"></i>
+                        Plan My Trip ✨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Special Offer Section -->
+            <div class="special-offer">
+                <div class="offer-content">
+                    <div class="offer-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="offer-text">
+                        <h3>Limited Time Offer!</h3>
+                        <p>Get 25% OFF on all Ready-Made Trip Plans - Book now and save big on your next adventure!</p>
+                    </div>
+                    <button class="offer-btn" id="offerBtn">
+                        <i class="fas fa-rocket"></i>
+                        View Ready Plans
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Background with overlay -->
+        <div class="hero-background"></div>
+    </section>
+
+    <!-- Ready-Made Trips Section -->
+    <section class="ready-trips" id="destinations">
+        <div class="container">
+            <h2 class="section-title">Ready-Made Trips</h2>
+            <p class="section-subtitle">Carefully selected destinations with detailed ready-made plans</p>
+            
+            <div class="trips-grid">
+                <!-- Malaysia Trip - WITH PROMOTION -->
+                <div class="trip-card"
+     data-destination="malaysia"
+     data-tags="nature,beach">
+
+                    <div class="trip-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Malaysia">
+                        <div class="trip-overlay">
+                            <span class="trip-duration">7 Days</span>
+                            <span class="discount-badge">25% OFF</span>
+                        </div>
+                    </div>
+                    <div class="trip-info">
+                        <h3 class="trip-title">Malaysia Premium Experience</h3>
+                        <p class="trip-description">Explore Kuala Lumpur and Langkawi islands with unique cultural experiences</p>
+                        <div class="trip-features">
+                            <span><i class="fas fa-hotel"></i> 5-Star Hotels</span>
+                            <span><i class="fas fa-utensils"></i> Selected Restaurants</span>
+                            <span><i class="fas fa-map-marked-alt"></i> Guided Tours</span>
+                        </div>
+                        <div class="trip-price-container">
+                            <div class="trip-price-original">$2,500</div>
+                            <div class="trip-price-promo">From $1,875</div>
+                        </div>
+                        <a href="malaysia-ready-plan.html" class="view-trip-btn" style="text-decoration: none; display: block; text-align: center;">View Details</a>
+                    </div>
+                </div>
+                
+                <!-- Japan Trip - WITH PROMOTION -->
+                <div class="trip-card"
+     data-destination="japan"
+     data-tags="culture,city,luxury">
+
+                    <div class="trip-image">
+                        <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&h=250&fit=crop&auto=enhance&sat=1.3&vib=1.2" alt="Japan">
+                        <div class="trip-overlay">
+                            <span class="trip-duration">10 Days</span>
+                            <span class="discount-badge">25% OFF</span>
+                        </div>
+                    </div>
+                    <div class="trip-info">
+                        <h3 class="trip-title">Japan Magical Adventure</h3>
+                        <p class="trip-description">From Tokyo to Kyoto, discover the beauty of ancient Japanese culture</p>
+                        <div class="trip-features">
+                            <span><i class="fas fa-hotel"></i> Traditional Ryokan</span>
+                            <span><i class="fas fa-utensils"></i> Japanese Cuisine</span>
+                            <span><i class="fas fa-train"></i> Bullet Train</span>
+                        </div>
+                        <div class="trip-price-container">
+                            <div class="trip-price-original">$4,200</div>
+                            <div class="trip-price-promo">From $3,150</div>
+                        </div>
+                        <a href="japan-ready-plan.html" class="view-trip-btn" style="text-decoration: none; display: block; text-align: center;">View Details</a>
+                    </div>
+                </div>
+                
+                <!-- Paris Trip - WITH PROMOTION -->
+                <div class="trip-card">
+                    <div class="trip-image">
+                        <img src="https://images.unsplash.com/photo-1471623320832-752e8bbf8413?w=400&h=250&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Paris">
+                        <div class="trip-overlay">
+                            <span class="trip-duration">6 Days</span>
+                            <span class="discount-badge">25% OFF</span>
+                        </div>
+                    </div>
+                    <div class="trip-info">
+                        <h3 class="trip-title">Paris City of Love</h3>
+                        <p class="trip-description">Experience the romance and elegance of the French capital</p>
+                        <div class="trip-features">
+                            <span><i class="fas fa-hotel"></i> Boutique Hotels</span>
+                            <span><i class="fas fa-utensils"></i> French Cuisine</span>
+                            <span><i class="fas fa-camera"></i> Photo Tours</span>
+                        </div>
+                        <div class="trip-price-container">
+                            <div class="trip-price-original">$3,800</div>
+                            <div class="trip-price-promo">From $2,850</div>
+                        </div>
+                        <button class="view-trip-btn">View Details</button>
+                    </div>
+                </div>
+
+                <!-- New York Trip - NO PROMOTION -->
+                <div class="trip-card">
+                    <div class="trip-image">
+                        <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=400&h=250&fit=crop&auto=enhance&sat=1.2&vib=1.2" alt="New York">
+                        <div class="trip-overlay">
+                            <span class="trip-duration">5 Days</span>
+                        </div>
+                    </div>
+                    <div class="trip-info">
+                        <h3 class="trip-title">New York City Break</h3>
+                        <p class="trip-description">The city that never sleeps - Broadway, Central Park, and iconic skylines</p>
+                        <div class="trip-features">
+                            <span><i class="fas fa-hotel"></i> Manhattan Hotels</span>
+                            <span><i class="fas fa-theater-masks"></i> Broadway Shows</span>
+                            <span><i class="fas fa-building"></i> Skyscraper Views</span>
+                        </div>
+                        <div class="trip-price">From $3,200</div>
+                        <button class="view-trip-btn">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="show-more-section">
+                <button class="show-more-btn" id="showMoreBtn">
+                    Show More Destinations
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <p class="section-subtitle">Real experiences from real travelers using Tripwise</p>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b84fde78?w=60&h=60&fit=crop&crop=face" alt="Sarah Johnson" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>Sarah Johnson</h4>
+                                <span>Traveled to Japan</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Tripwise made my Japan trip absolutely perfect! The AI recommendations were spot-on, and the itinerary was perfectly balanced. I discovered places I would never have found on my own. Highly recommend!"</p>
+                    <div class="review-date">March 2024</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Ahmed Al-Hassan" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>Ahmed Al-Hassan</h4>
+                                <span>Traveled to Malaysia</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Outstanding service! The trip planner understood exactly what I was looking for. The Malaysia experience was incredible - from Kuala Lumpur's bustling streets to Langkawi's pristine beaches. Worth every penny!"</p>
+                    <div class="review-date">February 2024</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Emily Chen" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>Emily Chen</h4>
+                                <span>Traveled to France</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Best travel planning experience ever! The smart suggestions saved me hours of research. Paris was magical, and every restaurant and attraction was perfectly chosen. The app is user-friendly and intuitive."</p>
+                    <div class="review-date">January 2024</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Michael Rodriguez" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>Michael Rodriguez</h4>
+                                <span>Traveled to UAE</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Tripwise exceeded all expectations! The Dubai itinerary was flawless - from luxury shopping to desert adventures. The budget optimization feature helped me get the most value for my money. Simply amazing!"</p>
+                    <div class="review-date">March 2024</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=60&h=60&fit=crop&crop=face" alt="Priya Sharma" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>Priya Sharma</h4>
+                                <span>Traveled to India</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Even as someone from India, Tripwise showed me my own country in a new light! The cultural insights and hidden gems recommendations were phenomenal. Perfect for both locals and tourists!"</p>
+                    <div class="review-date">February 2024</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=60&h=60&fit=crop&crop=face" alt="David Thompson" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h4>David Thompson</h4>
+                                <span>Traveled to Thailand</span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">"Incredible platform! Thailand trip was perfectly organized - from Bangkok's vibrant markets to Phuket's stunning beaches. The real-time updates and local recommendations made all the difference. 5 stars!"</p>
+                    <div class="review-date">January 2024</div>
+                </div>
+            </div>
+
+            <div class="reviews-summary">
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">Average Rating</span>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15,847</span>
+                        <span class="stat-label">Happy Travelers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Would Recommend</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="highlights">
+        <div class="container">
+            <h2 class="section-title">Why Choose Tripwise?</h2>
+            
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Smart Planning</h3>
+                    <p>Intelligent algorithms suggest the best places and activities based on your preferences</p>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Save Time</h3>
+                    <p>Plan your trip in minutes instead of hours of research</p>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Budget Friendly</h3>
+                    <p>We suggest the best options within your specified budget</p>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Always Available</h3>
+                    <p>Your plans are with you wherever you go, on all devices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Start Planning Your Next Trip Now</h2>
+                <p>Join thousands of travelers who trust Tripwise for their adventures</p>
+                <button class="cta-btn" id="ctaBtn">
+                    Start Planning Free
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tripwise</h3>
+                    <p>Your perfect platform for smart and easy trip planning</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="japan-custom-plan.html?country=japan&countryLabel=Japan&mode=planner">Trip Planner</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Partners</h4>
+                    <div class="partners-placeholder">
+                        <p>Partner Logos Placeholder</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e8efe7eec1f5f3e8f1f6e8f2e4afe2eeec">[email&#160;protected]</a></p>
+                        <p><i class="fas fa-phone"></i> +1 555 123 4567</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tripwise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="tripwise-auth-final.js"></script>
+    <script src="main.js"></script>
+    <!-- Auth Modal Container -->
+    <div id="loginModal"></div>
+
+</body>
+</html>

@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan 10-Day Plan: Tokyo → Kyoto → Osaka - Tripwise</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tripwise-auth-final.css">
+    <style>
+        /* ===== GOAL A: Single Auth Button Styling ===== */
+
+/* Hide Sign Up and Logout buttons completely on this page */
+.auth-section .signup-btn,
+.auth-section .logout-btn {
+    display: none !important;
+}
+
+/* Style the single auth button (Login or Back) */
+.auth-section .single-auth-btn {
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.auth-section .single-auth-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+/* Ensure proper visibility control */
+body:not(.authenticated) .guest-only {
+    display: inline-flex !important;
+}
+
+body:not(.authenticated) .auth-only {
+    display: none !important;
+}
+
+body.authenticated .guest-only {
+    display: none !important;
+}
+
+body.authenticated .auth-only {
+    display: inline-flex !important;
+}
+
+        /* Japan Ready Plan Specific Styles */
+        .plan-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 120px 20px 60px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1200&h=600&fit=crop') center/cover;
+            opacity: 0.3;
+        }
+        
+        .plan-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .plan-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .plan-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .plan-summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .summary-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .summary-card i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .plan-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .itinerary-section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+        
+        .day-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-number {
+            background: var(--gold);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .day-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        
+        .day-title p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .day-content {
+            padding: 2rem;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .activity-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--gold);
+        }
+        
+        .activity-card:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+        
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .activity-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+        
+        .activity-time {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .activity-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .activity-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .activity-location:hover {
+            color: var(--gold);
+        }
+        
+        .gallery-section {
+            background: var(--light-gray);
+            padding: 60px 20px;
+            margin: 4rem -20px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-large);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--white);
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .price-breakdown {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .price-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .price-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .total-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-note {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .price-items {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+        }
+        
+        .price-item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .price-item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .price-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+        
+        .price-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .price-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .inclusions-section {
+            background: var(--light-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .inclusions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .inclusion-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .inclusion-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .inclusion-text {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .customize-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .customize-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .book-btn {
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .book-btn:hover {
+            background: var(--gold-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        /* ===== Payment Modal Styles ===== */
+.payment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.payment-modal-overlay.open {
+    display: flex;
+}
+
+.payment-modal-box {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 2rem;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.35);
+    border: 1px solid #e5e7eb;
+}
+
+.payment-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.payment-modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.payment-close-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #64748b;
+}
+
+.payment-modal-text {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 1.2rem;
+}
+
+.payment-form {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.payment-form-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.payment-form-row .field {
+    flex: 1;
+}
+
+.payment-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.25rem;
+}
+
+.payment-input {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payment-input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+}
+
+.payment-hint {
+    font-size: 0.78rem;
+    color: #9ca3af;
+}
+
+.payment-submit-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.payment-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(148, 163, 184, 0.55);
+}
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .plan-title {
+                font-size: 2rem;
+            }
+            
+            .plan-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .plan-summary-cards {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .day-content {
+                padding: 1.5rem;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as main site) -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-plane-departure"></i>
+                        <span>Tripwise</span>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#destinations" class="nav-link">
+                            <i class="fas fa-plane"></i>
+                            Destinations
+                        </a>
+                    </li>
+                    <li class="nav-item auth-only" style="display: none;">
+                        <a href="japan-custom-plan.html?country=japan&countryLabel=Japan&mode=planner" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            Trip Planner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#reviews" class="nav-link">
+                            <i class="fas fa-star"></i>
+                            Reviews
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+                <div class="auth-section">
+    <!-- Guest: Show only Login button -->
+    <button class="single-auth-btn guest-only" id="loginBtn">
+        Login
+    </button>
+    <!-- Authenticated: Show only Back button (no Logout) -->
+    <button class="single-auth-btn auth-only" id="backBtn" style="display: none;" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+</div>
+
+                
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Plan Header -->
+    <section class="plan-header">
+        <div class="plan-header-content">
+            <h1 class="plan-title">🇯🇵 Japan 10-Day Magical Adventure</h1>
+            <p class="plan-subtitle">Tokyo → Kyoto → Osaka | Traditional Culture meets Modern Innovation</p>
+            
+            <div class="plan-summary-cards">
+                <div class="summary-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Duration</h3>
+                    <p>10 Days / 9 Nights</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-yen-sign"></i>
+                    <h3>Total Price</h3>
+                    <p>From $4,200</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Group Size</h3>
+                    <p>2 Travelers</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="plan-content">
+        <!-- Day-by-Day Itinerary -->
+        <section class="itinerary-section">
+            <div class="section-header">
+                <h2>📅 Day-by-Day Itinerary</h2>
+                <p>Every moment carefully planned for the perfect Japanese experience</p>
+            </div>
+
+            <!-- Day 1 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <div class="day-title">
+                        <h3>Arrival in Tokyo</h3>
+                        <p>Welcome to the Land of the Rising Sun</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Shibuya Crossing" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-plane-arrival"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Airport Arrival & Hotel Check-in</h4>
+                                    <span class="activity-time">10:00 AM - 2:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Arrive at Narita Airport, meet your guide, and transfer to your hotel in Shibuya. Rest and freshen up after your journey.</p>
+                            <a href="https://maps.google.com/search/Shibuya+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Shibuya District, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-walking"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Shibuya Crossing Experience</h4>
+                                    <span class="activity-time">4:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Experience the world's busiest pedestrian crossing and explore the vibrant Shibuya district with its neon lights and bustling atmosphere.</p>
+                            <a href="https://maps.google.com/search/Shibuya+Crossing+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Shibuya Crossing, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Welcome Dinner</h4>
+                                    <span class="activity-time">7:00 PM - 9:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Traditional Japanese welcome dinner at a local izakaya, featuring authentic dishes and sake tasting.</p>
+                            <a href="https://maps.google.com/search/Izakaya+Shibuya+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Local Izakaya, Shibuya
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2</div>
+                    <div class="day-title">
+                        <h3>Traditional Tokyo</h3>
+                        <p>Temples, Gardens, and Ancient Culture</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Tokyo Temples" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-torii-gate"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Senso-ji Temple Visit</h4>
+                                    <span class="activity-time">9:00 AM - 11:00 AM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Visit Tokyo's oldest temple, explore the traditional Nakamise shopping street, and witness morning prayers.</p>
+                            <a href="https://maps.google.com/search/Senso-ji+Temple+Asakusa+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Asakusa, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Imperial Palace Gardens</h4>
+                                    <span class="activity-time">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Stroll through the serene East Gardens of the Imperial Palace, enjoying traditional Japanese landscaping and seasonal flowers.</p>
+                            <a href="https://maps.google.com/search/Imperial+Palace+East+Gardens+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Imperial Palace, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-fish"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Tsukiji Outer Market</h4>
+                                    <span class="activity-time">4:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Explore the famous fish market, sample fresh sushi, and experience the bustling atmosphere of Tokyo's food culture.</p>
+                            <a href="https://maps.google.com/search/Tsukiji+Outer+Market+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Tsukiji, Tokyo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">3</div>
+                    <div class="day-title">
+                        <h3>Modern Tokyo & Pop Culture</h3>
+                        <p>Technology, Fashion, and Entertainment</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1548707309-dcebeaf0d4cb?w=800&h=400&fit=crop&auto=enhance&sat=1.3&vib=1.2" alt="Modern Tokyo" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Harajuku & Takeshita Street</h4>
+                                    <span class="activity-time">10:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Explore the epicenter of youth culture, fashion, and pop culture. Visit unique shops and experience Tokyo's creative side.</p>
+                            <a href="https://maps.google.com/search/Takeshita+Street+Harajuku+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Harajuku, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Akihabara Electric Town</h4>
+                                    <span class="activity-time">2:00 PM - 4:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Discover the world's largest electronics district, anime culture, and gaming centers. Perfect for tech enthusiasts!</p>
+                            <a href="https://maps.google.com/search/Akihabara+Electric+Town+Tokyo" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Akihabara, Tokyo
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Tokyo Skytree</h4>
+                                    <span class="activity-time">6:00 PM - 8:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Enjoy panoramic views of Tokyo from the world's second-tallest structure. Perfect for sunset and night city views.</p>
+                            <a href="https://maps.google.com/search/Tokyo+Skytree" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Sumida, Tokyo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <div class="day-title">
+                        <h3>Mount Fuji Day Trip</h3>
+                        <p>Japan's Sacred Mountain</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&h=400&fit=crop&auto=enhance&sat=1.3&vib=1.2" alt="Mount Fuji" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Mount Fuji 5th Station</h4>
+                                    <span class="activity-time">9:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Visit the 5th Station of Mount Fuji for breathtaking views of Japan's iconic mountain and surrounding landscapes.</p>
+                            <a href="https://maps.google.com/search/Mount+Fuji+5th+Station" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Mount Fuji, Japan
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Lake Kawaguchi</h4>
+                                    <span class="activity-time">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Enjoy the serene beauty of Lake Kawaguchi with perfect reflections of Mount Fuji on clear days.</p>
+                            <a href="https://maps.google.com/search/Lake+Kawaguchi+Japan" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kawaguchi Lake, Japan
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hot-tub"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Onsen Experience</h4>
+                                    <span class="activity-time">4:00 PM - 6:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Relax in traditional Japanese hot springs with views of Mount Fuji. A quintessential Japanese experience.</p>
+                            <a href="https://maps.google.com/search/Onsen+Mount+Fuji+area" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Fuji Five Lakes Area
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">5</div>
+                    <div class="day-title">
+                        <h3>Travel to Kyoto</h3>
+                        <p>Bullet Train to the Ancient Capital</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1544833048-4ad1c9d7e3b1?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Kyoto Gardens" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-train"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Shinkansen Bullet Train</h4>
+                                    <span class="activity-time">9:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Experience Japan's famous bullet train from Tokyo to Kyoto. Enjoy the scenic journey and Japanese efficiency.</p>
+                            <a href="https://maps.google.com/search/Tokyo+Station+to+Kyoto+Station" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Tokyo to Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hotel"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Ryokan Check-in</h4>
+                                    <span class="activity-time">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Check into a traditional Japanese inn (ryokan) and experience authentic hospitality with tatami mats and futon beds.</p>
+                            <a href="https://maps.google.com/search/Traditional+Ryokan+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Gion District, Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-walking"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Gion District Evening Walk</h4>
+                                    <span class="activity-time">5:00 PM - 7:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Stroll through Kyoto's famous geisha district, with its traditional wooden buildings and lantern-lit streets.</p>
+                            <a href="https://maps.google.com/search/Gion+District+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Gion District, Kyoto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">6</div>
+                    <div class="day-title">
+                        <h3>Golden Kyoto</h3>
+                        <p>Temples, Bamboo Groves, and Zen Gardens</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800&h=400&fit=crop&auto=enhance&sat=1.4&vib=1.2" alt="Golden Pavilion" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Kinkaku-ji Golden Pavilion</h4>
+                                    <span class="activity-time">8:00 AM - 10:00 AM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Visit Kyoto's most famous temple, covered in gold leaf and reflected in a tranquil pond surrounded by gardens.</p>
+                            <a href="https://maps.google.com/search/Kinkaku-ji+Golden+Pavilion+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kinkaku-ji, Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Arashiyama Bamboo Grove</h4>
+                                    <span class="activity-time">11:00 AM - 1:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Walk through the enchanting bamboo forest where towering bamboo creates a natural green tunnel with filtered sunlight.</p>
+                            <a href="https://maps.google.com/search/Arashiyama+Bamboo+Grove+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Arashiyama, Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-yin-yang"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Tenryu-ji Temple</h4>
+                                    <span class="activity-time">2:00 PM - 4:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Explore this UNESCO World Heritage Zen temple with its famous landscape garden designed for meditation.</p>
+                            <a href="https://maps.google.com/search/Tenryu-ji+Temple+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Arashiyama, Kyoto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">7</div>
+                    <div class="day-title">
+                        <h3>Spiritual Kyoto</h3>
+                        <p>Thousand Torii Gates and Sacred Paths</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1563141977-de273d0d6622?w=800&h=400&fit=crop&auto=enhance&sat=1.3&vib=1.2" alt="Fushimi Inari" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-torii-gate"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Fushimi Inari Shrine</h4>
+                                    <span class="activity-time">8:00 AM - 11:00 AM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Hike through thousands of vermillion torii gates that create tunnels up the mountainside at this iconic shrine.</p>
+                            <a href="https://maps.google.com/search/Fushimi+Inari+Shrine+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Fushimi Inari, Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Kiyomizu-dera Temple</h4>
+                                    <span class="activity-time">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Visit this wooden temple offering panoramic views of Kyoto. Famous for its wooden stage that juts out 13 meters above the hillside.</p>
+                            <a href="https://maps.google.com/search/Kiyomizu-dera+Temple+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Higashiyama, Kyoto
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Traditional Tea Ceremony</h4>
+                                    <span class="activity-time">4:00 PM - 5:30 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Participate in an authentic Japanese tea ceremony and learn about the philosophy and aesthetics of this ancient art.</p>
+                            <a href="https://maps.google.com/search/Tea+Ceremony+Kyoto" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Gion District, Kyoto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">8</div>
+                    <div class="day-title">
+                        <h3>Travel to Osaka</h3>
+                        <p>Japan's Kitchen Awaits</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&h=400&fit=crop&auto=enhance&sat=1.3&vib=1.1" alt="Bamboo Grove" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-train"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Travel to Osaka</h4>
+                                    <span class="activity-time">10:00 AM - 11:30 AM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Take the express train from Kyoto to Osaka, Japan's culinary capital and vibrant economic hub.</p>
+                            <a href="https://maps.google.com/search/Kyoto+to+Osaka+train" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kyoto to Osaka
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-castle"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Osaka Castle</h4>
+                                    <span class="activity-time">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Explore one of Japan's most famous castles, rebuilt in 1931, with excellent views of the city from the top floor.</p>
+                            <a href="https://maps.google.com/search/Osaka+Castle" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Osaka Castle, Osaka
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Dotonbori Food Adventure</h4>
+                                    <span class="activity-time">6:00 PM - 9:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Experience Osaka's famous food scene in the neon-lit Dotonbori district. Try takoyaki, okonomiyaki, and other local specialties.</p>
+                            <a href="https://maps.google.com/search/Dotonbori+Osaka" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Dotonbori, Osaka
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 9 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">9</div>
+                    <div class="day-title">
+                        <h3>Universal Studios Japan</h3>
+                        <p>Magical Entertainment & Fun</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?w=800&h=400&fit=crop&auto=enhance&sat=1.2&vib=1.1" alt="Osaka" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Wizarding World of Harry Potter</h4>
+                                    <span class="activity-time">9:00 AM - 12:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Enter the magical world of Hogwarts with authentic recreations of famous locations and thrilling rides.</p>
+                            <a href="https://maps.google.com/search/Universal+Studios+Japan+Osaka" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Universal Studios Japan
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-gamepad"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Nintendo World</h4>
+                                    <span class="activity-time">1:00 PM - 4:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Explore the colorful world of Super Mario and Nintendo characters with interactive attractions and games.</p>
+                            <a href="https://maps.google.com/search/Nintendo+World+Universal+Studios+Japan" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Nintendo World, USJ
+                            </a>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Souvenir Shopping</h4>
+                                    <span class="activity-time">5:00 PM - 7:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Browse unique Japanese souvenirs, anime merchandise, and local crafts to take home memories of your trip.</p>
+                            <a href="https://maps.google.com/search/Shinsaibashi+Shopping+Osaka" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Shinsaibashi, Osaka
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 10 -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">10</div>
+                    <div class="day-title">
+                        <h3>Departure</h3>
+                        <p>Sayonara Japan</p>
+                    </div>
+                </div>
+                <div class="day-content">
+                    <div class="day-image">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=400&fit=crop&auto=enhance&sat=1.1&vib=1.0" alt="Japan Departure" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+                    </div>
+                    <div class="activities-grid">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-suitcase"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Hotel Check-out</h4>
+                                    <span class="activity-time">10:00 AM - 11:00 AM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Pack your memories and check out from your hotel. Our team will assist with luggage and transportation arrangements.</p>
+                        </div>
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-icon">
+                                    <i class="fas fa-plane-departure"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>Airport Transfer</h4>
+                                    <span class="activity-time">12:00 PM - 2:00 PM</span>
+                                </div>
+                            </div>
+                            <p class="activity-description">Comfortable transfer to Kansai International Airport for your departure flight. End of an unforgettable Japanese adventure!</p>
+                            <a href="https://maps.google.com/search/Kansai+International+Airport" class="activity-location" target="_blank">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Kansai International Airport
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        
+
+        <!-- Price Breakdown -->
+        <section class="price-breakdown">
+            <div class="price-header">
+                <h3>💰 Price Breakdown</h3>
+                <div class="total-price">$4,200</div>
+                <p class="price-note">Per person (based on 2 travelers)</p>
+            </div>
+            
+            <div class="price-items">
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div>
+                            <h4>Accommodation</h4>
+                            <p>9 nights in premium hotels & traditional ryokan</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$1,500</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-train"></i>
+                        </div>
+                        <div>
+                            <h4>Transportation</h4>
+                            <p>Bullet train, local trains, and airport transfers</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$800</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div>
+                            <h4>Meals</h4>
+                            <p>Selected authentic Japanese dining experiences</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$600</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Activities & Attractions</h4>
+                            <p>Temple entries, Universal Studios, and cultural experiences</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$700</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-item-info">
+                        <div class="price-item-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <h4>Guide & Services</h4>
+                            <p>Professional English-speaking guide and 24/7 support</p>
+                        </div>
+                    </div>
+                    <div class="price-amount">$600</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inclusions -->
+        <section class="inclusions-section">
+            <div class="section-header">
+                <h3>✅ What's Included</h3>
+                <p>Everything you need for a worry-free Japanese adventure</p>
+            </div>
+            
+            <div class="inclusions-grid">
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <span class="inclusion-text">Airport transfers and transportation</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <span class="inclusion-text">Premium accommodation for 9 nights</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <span class="inclusion-text">Daily breakfast & selected meals</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <span class="inclusion-text">Professional English-speaking guide</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <span class="inclusion-text">All attraction and temple entrance fees</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-train"></i>
+                    </div>
+                    <span class="inclusion-text">JR Pass for unlimited train travel</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <span class="inclusion-text">Portable WiFi device</span>
+                </div>
+                
+                <div class="inclusion-item">
+                    <div class="inclusion-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <span class="inclusion-text">24/7 customer support</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="customize-btn" onclick="window.location.href='japan-custom-plan.html?mode=japan'">
+                <i class="fas fa-edit"></i>
+                Customize This Plan
+            </button>
+            <button class="book-btn" onclick="alert('Redirecting to booking...')">
+                <i class="fas fa-shopping-cart"></i>
+                Book Now
+            </button>
+        </div>
+    </div>
+    <!-- Payment Modal -->
+<div class="payment-modal-overlay" id="paymentModal">
+    <div class="payment-modal-box">
+        <div class="payment-modal-header">
+            <h3 class="payment-modal-title">Secure Payment</h3>
+            <button type="button" class="payment-close-btn" id="closePayment">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <p class="payment-modal-text">
+            Enter your card details to pay for the 10-day Japan trip.
+        </p>
+
+        <form id="paymentForm" class="payment-form" autocomplete="off">
+            <div class="field">
+                <label class="payment-label" for="cardName">Cardholder name</label>
+                <input
+                    id="cardName"
+                    type="text"
+                    class="payment-input"
+                    placeholder="e.g. Alex Johnson"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label class="payment-label" for="cardNumber">Card number</label>
+                <input
+                    id="cardNumber"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="23"
+                    class="payment-input"
+                    placeholder="1234 5678 9012 3456"
+                    required
+                >
+                <div class="payment-hint">Visa, Mastercard – demo only, no real charge.</div>
+            </div>
+
+            <div class="payment-form-row">
+                <div class="field">
+                    <label class="payment-label" for="cardExpiry">Expiry (MM/YY)</label>
+                    <input
+                        id="cardExpiry"
+                        type="text"
+                        class="payment-input"
+                        placeholder="08/28"
+                        required
+                    >
+                </div>
+                <div class="field">
+                    <label class="payment-label" for="cardCvv">CVV</label>
+                    <input
+                        id="cardCvv"
+                        type="password"
+                        inputmode="numeric"
+                        maxlength="4"
+                        class="payment-input"
+                        placeholder="123"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="payment-label" for="billingEmail">Billing email</label>
+                <input
+                    id="billingEmail"
+                    type="email"
+                    class="payment-input"
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <button type="submit" class="payment-submit-btn">
+                <i class="fas fa-lock"></i>
+                Pay $4,200
+            </button>
+        </form>
+    </div>
+</div>
+
+    <!-- Footer (same as main site) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tripwise</h3>
+                    <p>Your perfect platform for smart and easy trip planning</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#destinations">Destinations</a></li>
+                        <li><a href="japan-custom-plan.html?country=japan&countryLabel=Japan&mode=planner">Trip Planner</a></li>
+                        <li><a href="index.html#reviews">Reviews</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Partners</h4>
+                    <div class="partners-placeholder">
+                        <p>Partner Logos Placeholder</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="285b5d5858475a5c685c5a41585f415b4d064b4745">[email&#160;protected]</a></p>
+                        <p><i class="fas fa-phone"></i> +1 555 123 4567</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tripwise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Simple mobile menu toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all day cards and sections
+        document.querySelectorAll('.day-card, .gallery-item, .price-breakdown').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+    <!-- Auth Modal Container -->
+    <div id="loginModal"></div>
+
+    <script src="tripwise-auth-final.js"></script>
+    <script>
+    (function () {
+        const bookBtn = document.querySelector('.book-btn');
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentBtn = document.getElementById('closePayment');
+        const paymentForm = document.getElementById('paymentForm');
+
+        if (!bookBtn || !paymentModal || !paymentForm) return;
+
+        // Remove the old inline alert handler
+        bookBtn.onclick = null;
+
+        // Open modal on Book Now
+        bookBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            paymentModal.classList.add('open');
+        });
+
+        // Close button
+        if (closePaymentBtn) {
+            closePaymentBtn.addEventListener('click', function () {
+                paymentModal.classList.remove('open');
+            });
+        }
+
+        // Close when clicking outside the box
+        paymentModal.addEventListener('click', function (e) {
+            if (e.target === paymentModal) {
+                paymentModal.classList.remove('open');
+            }
+        });
+
+        // Fake payment processing
+        paymentForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('cardName').value.trim();
+            const numberRaw = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            const expiry = document.getElementById('cardExpiry').value.trim();
+            const cvv = document.getElementById('cardCvv').value.trim();
+
+            if (!name || !numberRaw || !expiry || !cvv) {
+                alert('Please fill in all required card details.');
+                return;
+            }
+
+            if (numberRaw.length < 13 || numberRaw.length > 19 || !/^\d+$/.test(numberRaw)) {
+                alert('Please enter a valid card number.');
+                return;
+            }
+
+            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+                alert('Expiry must be in MM/YY format.');
+                return;
+            }
+
+            if (!/^\d{3,4}$/.test(cvv)) {
+                alert('Please enter a valid CVV.');
+                return;
+            }
+
+            // At this point, in a real app you would send data to a backend or Stripe.
+            // For your project, we just simulate success:
+            alert('Payment processed successfully! Your Japan trip is booked 🎉');
+
+            paymentForm.reset();
+            paymentModal.classList.remove('open');
+        });
+    })();
+</script>
+
+</body>
+</html>
