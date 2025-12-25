@@ -7,7 +7,7 @@ This project uses Node.js, MySQL, and HTML/CSS/JS.
 Step 1: Clone the Repository  
 Open your terminal and run:
 
-git clone https://github.com/mohammed-Alnaffae/TripWise.git
+git clone https://github.com/mohammed-Alnaffaee/TripWise.git
 
 Then:
 
